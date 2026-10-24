@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>B.Tech Notes Hub</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        :root[data-theme="light"] {
+            --bg-color: #f4f4f9; --text-color: #333; --card-bg: #ffffff;
+            --primary: #4F46E5; --primary-hover: #4338ca; --border: #ddd;
+        }
+        :root[data-theme="dark"] {
+            --bg-color: #1a1a2e; --text-color: #f4f4f9; --card-bg: #16213e;
+            --primary: #4338ca; --primary-hover: #4F46E5; --border: #2a2a4a;
+        }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: var(--bg-color); color: var(--text-color); margin: 0; padding: 20px; transition: all 0.3s ease; }
+        .container { max-width: 800px; margin: 0 auto; }
+        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        button { background-color: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; transition: background 0.2s; margin-right: 5px; }
+        button:hover { background-color: var(--primary-hover); }
+        .btn-danger { background-color: #dc2626; }
+        .btn-danger:hover { background-color: #b91c1c; }
+        .card { background-color: var(--card-bg); padding: 20px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 20px; border: 1px solid var(--border); }
+        .form-group { margin-bottom: 15px; display: flex; flex-direction: column; }
+        .form-group label { margin-bottom: 5px; font-weight: bold; }
+        .form-group input, .form-group select { padding: 10px; border-radius: 5px; border: 1px solid var(--border); background-color: var(--bg-color); color: var(--text-color); }
+        #notesGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
+        .note-card { background-color: var(--card-bg); padding: 15px; border-radius: 8px; border: 1px solid var(--border); }
+        .note-card a { display: inline-block; margin-top: 10px; text-decoration: none; color: white; background-color: #10b981; padding: 8px 12px; border-radius: 4px; }
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>📚 B.Tech Notes Hub</h1>
+        <div>
+            <span id="userGreeting" style="margin-right: 15px; font-weight: bold;"></span>
+            <button id="logoutBtn" class="btn-danger hidden">Logout</button>
+            <button id="themeToggle">Toggle Dark Mode</button>
+        </div>
+    </header>
+
+    <!-- Authentication Section -->
+    <div id="authSection" class="card">
+        <h2>Student Login</h2>
+        <div class="form-group">
+            <label>Email</label>
+            <input type="email" id="authEmail" placeholder="student@example.com">
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" id="authPassword" placeholder="Minimum 6 characters">
+        </div>
+        <button id="loginBtn">Login</button>
+        <button id="signupBtn" style="background-color: #10b981;">Sign Up</button>
+        <p id="authStatus" style="margin-top: 10px; font-weight: bold;"></p>
+    </div>
+
+    <!-- Upload Section (Hidden by default) -->
+    <div id="uploadSection" class="card hidden">
+        <h2>Upload a Note</h2>
+        <form id="uploadForm">
+            <div class="form-group">
+                <label>Title</label>
+                <input type="text" id="noteTitle" required placeholder="e.g. Data Structures Notes">
+            </div>
+            <div class="form-group">
+                <label>Subject</label>
+                <input type="text" id="noteSubject" required>
+            </div>
+            <div class="form-group">
+                <label>Year</label>
+                <select id="noteYear">
+                    <option value="1">1st Year</option>
+                    <option value="2">2nd Year</option>
+                    <option value="3">3rd Year</option>
+                    <option value="4">4th Year</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>File (PDF/PPT)</label>
+                <input type="file" id="noteFile" required accept=".pdf,.ppt,.pptx">
+            </div>
+            <button type="submit" id="uploadBtn">Upload Note 🚀</button>
+        </form>
+        <p id="uploadStatus" style="margin-top: 10px; font-weight: bold;"></p>
+    </div>
+
+    <!-- Browse Section -->
+    <h2>Available Notes</h2>
+    <div id="notesGrid"></div>
+</div>
+
+<script>
+    // ---------- 1. Initialize Supabase ----------
+    const supabaseUrl = 'https://xvhgncwvgwvpjwitbcmn.supabase.co';
+    const supabaseKey = 'sb_publishable_PBVF_pPsGmnjaBEo2kMVKg_BztKnpF2';
+    const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+
+    let currentUser = null;
+
+    // ---------- 2. Theme Toggle ----------
+    const themeToggle = document.getElementById('themeToggle');
+    const html = document.documentElement;
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    html.setAttribute('data-theme', savedTheme);
+    themeToggle.addEventListener('click', () => {
+        const newTheme = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+        html.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+    });
+
+    // ---------- 3. Authentication Logic ----------
+    const authSection = document.getElementById('authSection');
+    const uploadSection = document.getElementById('uploadSection');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const userGreeting = document.getElementById('userGreeting');
+    const authStatus = document.getElementById('authStatus');
+
+    // Check session on load
+    async function checkSession() {
+        const { data: { session } } = await supabaseClient.auth.getSession();
+        updateUI(session?.user || null);
+    }
+
+    // Listen for Auth state changes
+    supabaseClient.auth.onAuthStateChange((_event, session) => {
+        updateUI(session?.user || null);
+    });
+
+    function updateUI(user) {
+        currentUser = user;
+        if (user) {
+            authSection.classList.add('hidden');
+            uploadSection.classList.remove('hidden');
+            logoutBtn.classList.remove('hidden');
+            userGreeting.textContent = `Hello, ${user.email}`;
+        } else {
+            authSection.classList.remove('hidden');
+            uploadSection.classList.add('hidden');
+            logoutBtn.classList.add('hidden');
+            userGreeting.textContent = '';
+        }
+    }
+
+    // Sign Up
+    document.getElementById('signupBtn').addEventListener('click', async () => {
+        const email = document.getElementById('authEmail').value;
+        const password = document.getElementById('authPassword').value;
+        authStatus.textContent = "Signing up... ⏳";
+        
+        const { data, error } = await supabaseClient.auth.signUp({ email, password });
+        if (error) authStatus.innerHTML = `<span style="color:red">${error.message}</span>`;
+        else authStatus.innerHTML = `<span style="color:green">Account created! You are logged in.</span>`;
+    });
+
+    // Login
+    document.getElementById('loginBtn').addEventListener('click', async () => {
+        const email = document.getElementById('authEmail').value;
+        const password = document.getElementById('authPassword').value;
+        authStatus.textContent = "Logging in... ⏳";
+
+        const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+        if (error) authStatus.innerHTML = `<span style="color:red">${error.message}</span>`;
+        else authStatus.textContent = "";
+    });
+
+    // Logout
+    logoutBtn.addEventListener('click', async () => {
+        await supabaseClient.auth.signOut();
+    });
+
+    // ---------- 4. Upload File (Now checks for user) ----------
+    document.getElementById('uploadForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (!currentUser) return alert("You must be logged in to upload.");
+
+        const title = document.getElementById('noteTitle').value;
+        const subject = document.getElementById('noteSubject').value;
+        const year = document.getElementById('noteYear').value;
+        const file = document.getElementById('noteFile').files[0];
+        const statusText = document.getElementById('uploadStatus');
+
+        if (!file) return;
+        statusText.textContent = "Uploading... ⏳"; document.getElementById('uploadBtn').disabled = true;
+
+        try {
+            const fileName = `${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.\-]/g, '_')}`;
+            const { error: storageError } = await supabaseClient.storage.from('notes').upload(fileName, file);
+            if (storageError) throw storageError;
+
+            const { data: publicUrlData } = supabaseClient.storage.from('notes').getPublicUrl(fileName);
+            
+            const { error: dbError } = await supabaseClient.from('notes_metadata').insert([{ 
+                title: title, subject: subject, year: parseInt(year), 
+                uploader: currentUser.email, // Tags the active user automatically
+                file_url: publicUrlData.publicUrl, file_type: file.type 
+            }]);
+            if (dbError) throw dbError;
+
+            statusText.innerHTML = `<span style="color:green">Upload Complete! 🎉</span>`;
+            document.getElementById('uploadForm').reset();
+            fetchNotes();
+        } catch (error) {
+            statusText.innerHTML = `<span style="color:red">Error: ${error.message}</span>`;
+        } finally {
+            document.getElementById('uploadBtn').disabled = false;
+        }
+    });
+
+    // ---------- 5. Fetch & Display Notes ----------
+    async function fetchNotes() {
+        const grid = document.getElementById('notesGrid');
+        try {
+            const { data, error } = await supabaseClient.from('notes_metadata').select('*').order('year', { ascending: true });
+            if (error) throw error;
+            
+            grid.innerHTML = data.length === 0 ? "<p>No notes found.</p>" : "";
+            data.forEach(note => {
+                grid.innerHTML += `
+                    <div class="note-card">
+                        <h3>${note.title}</h3>
+                        <p><strong>Subject:</strong> ${note.subject}</p>
+                        <p><strong>Year:</strong> ${note.year}</p>
+                        <p><strong>Uploader:</strong> ${note.uploader || 'Anonymous'}</p>
+                        <a href="${note.file_url}" target="_blank">Download File 📥</a>
+                    </div>`;
+            });
+        } catch (error) {
+            grid.innerHTML = `<p style="color:red;">Error: ${error.message}</p>`;
+        }
+    }
+
+    checkSession();
+    fetchNotes();
+</script>
+</body>
+</html>
