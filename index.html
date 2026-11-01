@@ -4,66 +4,42 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NoteShare Cloud | B.Tech Notes Sharing</title>
-  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
-    /* ---------- CSS Variables ---------- */
     :root {
-      --bg: #f8fafc;
-      --surface: #ffffff;
-      --surface-glass: rgba(255, 255, 255, 0.7);
-      --text: #0f172a;
-      --text-muted: #64748b;
-      --primary: #6366f1;
-      --primary-dark: #4f46e5;
-      --accent: #8b5cf6;
-      --accent-2: #ec4899;
-      --border: #e2e8f0;
-      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --bg: #f8fafc; --surface: #ffffff; --surface-glass: rgba(255, 255, 255, 0.7);
+      --text: #0f172a; --text-muted: #64748b; --primary: #6366f1;
+      --primary-dark: #4f46e5; --accent: #8b5cf6; --accent-2: #ec4899;
+      --border: #e2e8f0; --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
       --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
       --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-      --radius: 16px;
-      --radius-sm: 10px;
-      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --radius: 16px; --radius-sm: 10px; --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
-
     [data-theme="dark"] {
-      --bg: #0f172a;
-      --surface: #1e293b;
-      --surface-glass: rgba(30, 41, 59, 0.7);
-      --text: #f1f5f9;
-      --text-muted: #94a3b8;
-      --border: #334155;
+      --bg: #0f172a; --surface: #1e293b; --surface-glass: rgba(30, 41, 59, 0.7);
+      --text: #f1f5f9; --text-muted: #94a3b8; --border: #334155;
       --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
       --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.4);
       --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5), 0 4px 6px -4px rgb(0 0 0 / 0.5);
     }
-
-    /* ---------- Reset & Base ---------- */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; transition: background 0.3s, color 0.3s; overflow-x: hidden; }
     a { text-decoration: none; color: inherit; }
     img { max-width: 100%; display: block; }
     button { cursor: pointer; font-family: inherit; border: none; background: none; }
-
-    /* ---------- Utility ---------- */
     .container { width: min(1200px, 90%); margin: 0 auto; }
     .section { padding: 5rem 0; }
     .section-title { font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 800; text-align: center; margin-bottom: 1rem; background: linear-gradient(135deg, var(--primary), var(--accent), var(--accent-2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
     .section-subtitle { text-align: center; color: var(--text-muted); max-width: 600px; margin: 0 auto 3rem; font-size: 1.1rem; }
-    
     .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.8rem 1.8rem; border-radius: 999px; font-weight: 600; font-size: 0.95rem; transition: var(--transition); border: 1px solid transparent; }
     .btn-primary { background: linear-gradient(135deg, var(--primary), var(--accent)); color: #fff; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4); }
     .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(99, 102, 241, 0.5); }
     .btn-outline { background: var(--surface-glass); backdrop-filter: blur(10px); border: 1px solid var(--border); color: var(--text); }
     .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
-
-    /* ---------- Navbar ---------- */
     .navbar { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; padding: 1rem 0; background: var(--surface-glass); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); transition: var(--transition); }
     .navbar .container { display: flex; align-items: center; justify-content: space-between; }
     .logo { font-size: 1.4rem; font-weight: 800; background: linear-gradient(135deg, var(--primary), var(--accent-2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; display: flex; align-items: center; gap: 0.5rem; }
@@ -77,8 +53,6 @@
     .theme-toggle { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: var(--surface); border: 1px solid var(--border); color: var(--text); font-size: 1.1rem; transition: var(--transition); }
     .theme-toggle:hover { border-color: var(--primary); color: var(--primary); transform: rotate(20deg); }
     .hamburger { display: none; font-size: 1.5rem; color: var(--text); }
-
-    /* ---------- Hero ---------- */
     .hero { min-height: 100vh; display: flex; align-items: center; position: relative; overflow: hidden; padding-top: 80px; }
     .hero::before { content: ''; position: absolute; top: -50%; right: -20%; width: 800px; height: 800px; background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%); border-radius: 50%; animation: float 8s ease-in-out infinite; }
     .hero::after { content: ''; position: absolute; bottom: -30%; left: -10%; width: 600px; height: 600px; background: radial-gradient(circle, rgba(236, 72, 153, 0.1) 0%, transparent 70%); border-radius: 50%; animation: float 10s ease-in-out infinite reverse; }
@@ -99,13 +73,10 @@
     .hero-card-item span:first-child { color: var(--text-muted); }
     .hero-card-item span:last-child { font-weight: 600; }
     .badge { background: linear-gradient(135deg, var(--primary), var(--accent)); color: #fff; padding: 0.2rem 0.6rem; border-radius: 999px; font-size: 0.75rem; font-weight: 600; }
-
-    /* ---------- Stats & Features ---------- */
     .stats { padding: 3rem 0; background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
     .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; text-align: center; }
     .stat-item h3 { font-size: 2.5rem; font-weight: 800; background: linear-gradient(135deg, var(--primary), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
     .stat-item p { color: var(--text-muted); font-size: 0.95rem; font-weight: 500; }
-
     .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
     .feature-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; transition: var(--transition); position: relative; overflow: hidden; }
     .feature-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: linear-gradient(90deg, var(--primary), var(--accent), var(--accent-2)); transform: scaleX(0); transform-origin: left; transition: transform 0.4s; }
@@ -114,22 +85,17 @@
     .feature-icon { width: 56px; height: 56px; border-radius: var(--radius-sm); display: grid; place-items: center; font-size: 1.5rem; margin-bottom: 1.25rem; background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1)); color: var(--primary); }
     .feature-card h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem; }
     .feature-card p { color: var(--text-muted); font-size: 0.95rem; }
-
-    /* ---------- Steps ---------- */
     .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; position: relative; }
     .step-card { text-align: center; padding: 2rem 1rem; position: relative; }
     .step-number { width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--accent)); color: #fff; display: grid; place-items: center; font-weight: 800; font-size: 1.2rem; margin: 0 auto 1rem; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4); }
     .step-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem; }
     .step-card p { color: var(--text-muted); font-size: 0.9rem; }
-
-    /* ---------- Browse Notes ---------- */
     .browse-controls { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin-bottom: 2.5rem; }
     .search-box { display: flex; align-items: center; background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 0.6rem 1.2rem; gap: 0.5rem; flex: 1; min-width: 250px; max-width: 400px; transition: var(--transition); }
     .search-box:focus-within { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1); }
     .search-box input { border: none; background: none; outline: none; color: var(--text); font-size: 0.95rem; width: 100%; }
     .filter-select { padding: 0.6rem 1.2rem; border-radius: 999px; border: 1px solid var(--border); background: var(--surface); color: var(--text); font-size: 0.95rem; outline: none; cursor: pointer; transition: var(--transition); }
     .filter-select:focus { border-color: var(--primary); }
-
     .notes-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
     .note-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; transition: var(--transition); display: flex; flex-direction: column; position: relative; }
     .note-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: var(--primary); }
@@ -141,8 +107,6 @@
     .note-downloads { font-size: 0.8rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.3rem; }
     .note-btn { padding: 0.4rem 1rem; border-radius: 999px; background: var(--primary); color: #fff; font-size: 0.8rem; font-weight: 600; transition: var(--transition); }
     .note-btn:hover { background: var(--primary-dark); transform: scale(1.05); }
-
-    /* ---------- Upload ---------- */
     .upload-container { max-width: 700px; margin: 0 auto; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 2.5rem; box-shadow: var(--shadow); }
     .drop-zone { border: 2px dashed var(--border); border-radius: var(--radius); padding: 3rem 2rem; text-align: center; transition: var(--transition); cursor: pointer; margin-bottom: 1.5rem; }
     .drop-zone:hover, .drop-zone.dragover { border-color: var(--primary); background: rgba(99, 102, 241, 0.05); }
@@ -156,16 +120,12 @@
     .form-group input, .form-group select { padding: 0.7rem 1rem; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 0.95rem; outline: none; transition: var(--transition); }
     .form-group input:focus, .form-group select:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1); }
     .upload-btn { width: 100%; justify-content: center; padding: 0.9rem; font-size: 1rem; }
-
-    /* ---------- Modal ---------- */
     .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); backdrop-filter: blur(5px); z-index: 2000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: var(--transition); }
     .modal-overlay.active { opacity: 1; pointer-events: all; }
     .modal-content { background: var(--surface); width: 90%; max-width: 400px; border-radius: var(--radius); padding: 2.5rem; position: relative; transform: translateY(20px); transition: var(--transition); box-shadow: var(--shadow-lg); }
     .modal-overlay.active .modal-content { transform: translateY(0); }
     .close-modal { position: absolute; top: 1rem; right: 1rem; font-size: 1.2rem; color: var(--text-muted); transition: var(--transition); }
     .close-modal:hover { color: var(--text); transform: scale(1.1); }
-
-    /* ---------- Footer ---------- */
     .footer { background: var(--surface); border-top: 1px solid var(--border); padding: 3rem 0 1.5rem; margin-top: 4rem; }
     .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2rem; margin-bottom: 2rem; }
     .footer-brand h3 { font-size: 1.3rem; font-weight: 800; margin-bottom: 0.75rem; background: linear-gradient(135deg, var(--primary), var(--accent-2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
@@ -175,20 +135,15 @@
     .footer-col a { color: var(--text-muted); font-size: 0.9rem; transition: var(--transition); }
     .footer-col a:hover { color: var(--primary); }
     .footer-bottom { text-align: center; padding-top: 1.5rem; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.85rem; }
-
-    /* ---------- Responsive ---------- */
     @media (max-width: 968px) { .hero .container { grid-template-columns: 1fr; text-align: center; } .hero-content p { margin: 0 auto 2rem; } .hero-buttons { justify-content: center; } .hero-visual { order: -1; } .stats-grid { grid-template-columns: repeat(2, 1fr); } .footer-grid { grid-template-columns: 1fr 1fr; } }
     @media (max-width: 768px) { .nav-links { display: none; } .hamburger { display: block; } .form-row { grid-template-columns: 1fr; } .footer-grid { grid-template-columns: 1fr; text-align: center; } .footer-brand p { margin: 0 auto; } }
     @media (max-width: 480px) { .stats-grid { grid-template-columns: 1fr; } .hero-buttons { flex-direction: column; align-items: center; } .btn { width: 100%; justify-content: center; } }
   </style>
 </head>
 <body>
-  <!-- Navbar -->
   <nav class="navbar">
     <div class="container">
-      <a href="#" class="logo">
-        <i class="fa-solid fa-cloud"></i> NoteShare Cloud
-      </a>
+      <a href="#" class="logo"><i class="fa-solid fa-cloud"></i> NoteShare Cloud</a>
       <ul class="nav-links">
         <li><a href="#home">Home</a></li>
         <li><a href="#features">Features</a></li>
@@ -196,20 +151,13 @@
         <li><a href="#upload">Upload</a></li>
       </ul>
       <div class="nav-actions">
-        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-          <i class="fa-solid fa-moon"></i>
-        </button>
-        <a href="#" id="loginBtn" class="btn btn-primary" style="padding: 0.6rem 1.4rem; font-size: 0.85rem;">
-          <i class="fa-solid fa-right-to-bracket"></i> Login
-        </a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme"><i class="fa-solid fa-moon"></i></button>
+        <a href="#" id="loginBtn" class="btn btn-primary" style="padding: 0.6rem 1.4rem; font-size: 0.85rem;"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
       </div>
-      <button class="hamburger" id="hamburger">
-        <i class="fa-solid fa-bars"></i>
-      </button>
+      <button class="hamburger" id="hamburger"><i class="fa-solid fa-bars"></i></button>
     </div>
   </nav>
 
-  <!-- Hero -->
   <header class="hero" id="home">
     <div class="container">
       <div class="hero-content">
@@ -222,11 +170,8 @@
       </div>
       <div class="hero-visual">
         <div class="hero-card">
-          <div class="hero-card-header">
-            <i class="fa-solid fa-graduation-cap"></i>
-            <h3>Dashboard Preview</h3>
-          </div>
-          <div class="hero-card-item"><span><i class="fa-solid fa-calendar"></i> Year</span><span>3rd Year</span></div>
+          <div class="hero-card-header"><i class="fa-solid fa-graduation-cap"></i><h3>Dashboard Preview</h3></div>
+          <div class="hero-card-item"><span><i class="fa-solid fa-calendar"></i> Year</span><span>2nd Year</span></div>
           <div class="hero-card-item"><span><i class="fa-solid fa-book"></i> Subject</span><span>Cloud Computing</span></div>
           <div class="hero-card-item"><span><i class="fa-solid fa-file-pdf"></i> Notes</span><span class="badge">12 Files</span></div>
           <div class="hero-card-item"><span><i class="fa-solid fa-download"></i> Downloads</span><span>1,248</span></div>
@@ -235,7 +180,6 @@
     </div>
   </header>
 
-  <!-- Stats -->
   <section class="stats">
     <div class="container">
       <div class="stats-grid">
@@ -247,7 +191,6 @@
     </div>
   </section>
 
-  <!-- Features -->
   <section class="section" id="features">
     <div class="container">
       <h2 class="section-title">Why NoteShare Cloud?</h2>
@@ -261,7 +204,6 @@
     </div>
   </section>
 
-  <!-- How It Works -->
   <section class="section" style="background: var(--surface);">
     <div class="container">
       <h2 class="section-title">How It Works</h2>
@@ -275,7 +217,6 @@
     </div>
   </section>
 
-  <!-- Browse Notes -->
   <section class="section" id="browse">
     <div class="container">
       <h2 class="section-title">Browse Notes</h2>
@@ -294,20 +235,12 @@
         </select>
         <select class="filter-select" id="subjectFilter">
           <option value="">All Subjects</option>
-          <option value="Data Structures">Data Structures</option>
-          <option value="Cloud Computing">Cloud Computing</option>
-          <option value="DBMS">DBMS</option>
-          <option value="Operating Systems">Operating Systems</option>
-          <option value="Computer Networks">Computer Networks</option>
         </select>
       </div>
-      <div class="notes-grid" id="notesGrid">
-        <!-- Notes will be rendered by Supabase -->
-      </div>
+      <div class="notes-grid" id="notesGrid"></div>
     </div>
   </section>
 
-  <!-- Upload -->
   <section class="section" id="upload" style="background: var(--surface);">
     <div class="container">
       <h2 class="section-title">Upload Notes</h2>
@@ -332,14 +265,16 @@
             </div>
             <div class="form-group">
               <label for="uploadSubject">Subject</label>
-              <input type="text" id="uploadSubject" placeholder="e.g. Cloud Computing" required />
+              <select id="uploadSubject" required>
+                <option value="">Select Year First</option>
+              </select>
             </div>
           </div>
           <div class="form-group">
             <label for="uploadTitle">Note Title</label>
             <input type="text" id="uploadTitle" placeholder="e.g. Unit 3 - Architectures" required />
           </div>
-          <button type="submit" class="btn btn-primary upload-btn">
+          <button type="submit" class="btn btn-primary upload-btn" id="uploadSubmitBtn">
             <i class="fa-solid fa-upload"></i> Upload Note
           </button>
         </form>
@@ -347,7 +282,6 @@
     </div>
   </section>
 
-  <!-- Footer -->
   <footer class="footer">
     <div class="container">
       <div class="footer-grid">
@@ -390,7 +324,6 @@
     </div>
   </footer>
 
-  <!-- Auth Modal -->
   <div class="modal-overlay" id="authModal">
     <div class="modal-content">
       <button class="close-modal" id="closeAuth"><i class="fa-solid fa-xmark"></i></button>
@@ -404,9 +337,7 @@
           <label>Password</label>
           <input type="password" id="authPassword" required placeholder="Minimum 6 characters" />
         </div>
-        <button type="submit" class="btn btn-primary upload-btn" style="margin-top: 1rem;" id="authSubmitBtn">
-          Login
-        </button>
+        <button type="submit" class="btn btn-primary upload-btn" style="margin-top: 1rem;" id="authSubmitBtn">Login</button>
       </form>
       <p style="text-align: center; margin-top: 1.5rem; font-size: 0.9rem; color: var(--text-muted);">
         <span id="authToggleText">Don't have an account?</span> 
@@ -415,17 +346,57 @@
     </div>
   </div>
 
-  <!-- Supabase Library -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <!-- Main Application Logic -->
   <script>
-    // ---------- Initialize Supabase ----------
     const supabaseUrl = 'https://xvhgncwvgwvpjwitbcmn.supabase.co'; 
     const supabaseKey = 'sb_publishable_PBVF_pPsGmnjaBEo2kMVKg_BztKnpF2';
     const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-    // ---------- Theme Toggle ----------
+    const aktuSubjects = {
+      "1": ["Engineering Physics", "Engineering Mathematics", "Programming for Problem Solving", "Basic Electrical Engineering"],
+      "2": ["Data Structures", "Discrete Structures", "Computer Organization", "Operating Systems"],
+      "3": ["Database Management Systems", "Compiler Design", "Web Technology", "Software Engineering"],
+      "4": ["Cloud Computing", "Artificial Intelligence", "Cryptography", "Distributed Systems"]
+    };
+
+    const sampleNotes = [];
+    for (const [yr, subjects] of Object.entries(aktuSubjects)) {
+      subjects.forEach(sub => {
+        sampleNotes.push({ title: `${sub} - Full Notes`, subject: sub, year: parseInt(yr), file_type: 'PDF', uploader: 'System Admin', file_url: '#' });
+      });
+    }
+
+    function updateSubjectDropdowns(yearElementId, subjectElementId) {
+      const year = document.getElementById(yearElementId).value;
+      const subjectSelect = document.getElementById(subjectElementId);
+      const defaultText = yearElementId === 'yearFilter' ? 'All Subjects' : 'Select Subject';
+      subjectSelect.innerHTML = `<option value="">${defaultText}</option>`;
+
+      if (year && aktuSubjects[year]) {
+        aktuSubjects[year].forEach(sub => {
+          const opt = document.createElement('option');
+          opt.value = sub; opt.textContent = sub;
+          subjectSelect.appendChild(opt);
+        });
+      } else if (yearElementId === 'yearFilter') {
+        Object.values(aktuSubjects).flat().forEach(sub => {
+          const opt = document.createElement('option');
+          opt.value = sub; opt.textContent = sub;
+          subjectSelect.appendChild(opt);
+        });
+      }
+    }
+
+    const yearFilter = document.getElementById('yearFilter');
+    const subjectFilter = document.getElementById('subjectFilter');
+    const uploadYear = document.getElementById('uploadYear');
+    const uploadSubject = document.getElementById('uploadSubject');
+
+    yearFilter.addEventListener('change', () => { updateSubjectDropdowns('yearFilter', 'subjectFilter'); renderNotes(); });
+    uploadYear.addEventListener('change', () => { updateSubjectDropdowns('uploadYear', 'uploadSubject'); });
+    updateSubjectDropdowns('yearFilter', 'subjectFilter'); 
+
     const themeToggle = document.getElementById('themeToggle');
     const html = document.documentElement;
     const savedTheme = localStorage.getItem('theme') || 'light';
@@ -441,33 +412,21 @@
     });
 
     function updateThemeIcon(theme) {
-      const icon = themeToggle.querySelector('i');
-      icon.className = theme === 'light' ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
+      themeToggle.querySelector('i').className = theme === 'light' ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
     }
 
-    // ---------- Fetch & Render Notes ----------
     const notesGrid = document.getElementById('notesGrid');
     const searchInput = document.getElementById('searchInput');
-    const yearFilter = document.getElementById('yearFilter');
-    const subjectFilter = document.getElementById('subjectFilter');
-
     let allNotes = [];
 
     async function fetchNotes() {
       notesGrid.innerHTML = '<p style="text-align:center; grid-column: 1/-1;">Loading notes from cloud...</p>';
-      
-      const { data, error } = await supabaseClient
-        .from('notes_metadata')
-        .select('*')
-        .order('created_at', { ascending: false });
-
+      const { data, error } = await supabaseClient.from('notes_metadata').select('*').order('created_at', { ascending: false });
       if (error) {
-        console.error('Error fetching notes:', error);
         notesGrid.innerHTML = '<p style="text-align:center; color: red;">Failed to load notes.</p>';
         return;
       }
-
-      allNotes = data;
+      allNotes = [...(data || []), ...sampleNotes];
       renderNotes();
     }
 
@@ -484,80 +443,52 @@
       });
 
       if (filtered.length === 0) {
-        notesGrid.innerHTML = `
-          <div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--text-muted);">
-            <i class="fa-solid fa-folder-open" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
-            <p>No notes found. Be the first to upload!</p>
-          </div>
-        `;
+        notesGrid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--text-muted);"><i class="fa-solid fa-folder-open" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i><p>No notes found. Be the first to upload!</p></div>`;
         return;
       }
 
       notesGrid.innerHTML = filtered.map(note => `
         <div class="note-card">
           <span class="note-badge">${note.file_type || 'FILE'}</span>
-          <div class="note-icon">
-            <i class="fa-solid ${note.file_type === 'PDF' ? 'fa-file-pdf' : 'fa-file-powerpoint'}"></i>
-          </div>
+          <div class="note-icon"><i class="fa-solid ${note.file_type === 'PDF' ? 'fa-file-pdf' : 'fa-file-powerpoint'}"></i></div>
           <h3>${note.title}</h3>
           <p class="note-meta">${note.subject} • Year ${note.year}</p>
           <div class="note-footer">
-            <span class="note-downloads">
-              <i class="fa-solid fa-user"></i> ${note.uploader || 'Student'}
-            </span>
-            <a href="${note.file_url}" target="_blank" class="note-btn" rel="noopener noreferrer">
-              <i class="fa-solid fa-download"></i> Download
-            </a>
+            <span class="note-downloads"><i class="fa-solid fa-user"></i> ${note.uploader || 'Student'}</span>
+            <a href="${note.file_url}" target="_blank" class="note-btn" rel="noopener noreferrer"><i class="fa-solid fa-download"></i> Download</a>
           </div>
         </div>
       `).join('');
     }
 
     searchInput.addEventListener('input', renderNotes);
-    yearFilter.addEventListener('change', renderNotes);
     subjectFilter.addEventListener('change', renderNotes);
-
-    // Initial Fetch
     fetchNotes();
 
-    // ---------- Upload System ----------
     const dropZone = document.getElementById('dropZone');
     const fileInput = document.getElementById('fileInput');
     const uploadForm = document.getElementById('uploadForm');
-    const uploadBtn = document.querySelector('.upload-btn');
+    const uploadBtn = document.getElementById('uploadSubmitBtn');
 
     dropZone.addEventListener('click', () => fileInput.click());
     dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
     dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
     dropZone.addEventListener('drop', (e) => {
-      e.preventDefault();
-      dropZone.classList.remove('dragover');
-      if (e.dataTransfer.files.length) {
-        fileInput.files = e.dataTransfer.files;
-        updateDropZoneText(e.dataTransfer.files[0].name);
-      }
+      e.preventDefault(); dropZone.classList.remove('dragover');
+      if (e.dataTransfer.files.length) { fileInput.files = e.dataTransfer.files; updateDropZoneText(e.dataTransfer.files[0].name); }
     });
 
-    fileInput.addEventListener('change', () => {
-      if (fileInput.files.length) updateDropZoneText(fileInput.files[0].name);
-    });
-
-    function updateDropZoneText(filename) {
-      dropZone.querySelector('p').innerHTML = `Selected: <span style="word-break: break-all;">${filename}</span>`;
-    }
+    fileInput.addEventListener('change', () => { if (fileInput.files.length) updateDropZoneText(fileInput.files[0].name); });
+    function updateDropZoneText(filename) { dropZone.querySelector('p').innerHTML = `Selected: <span style="word-break: break-all;">${filename}</span>`; }
 
     uploadForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      
       const year = document.getElementById('uploadYear').value;
       const subject = document.getElementById('uploadSubject').value;
       const title = document.getElementById('uploadTitle').value;
       const file = fileInput.files[0];
 
-      if (!year || !subject || !title || !file) {
-        alert('Please fill all fields and select a file.');
-        return;
-      }
+      if (!year || !subject || !title || !file) { alert('Please fill all fields and select a file.'); return; }
 
       const originalBtnText = uploadBtn.innerHTML;
       uploadBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Uploading...';
@@ -566,37 +497,19 @@
       try {
         const fileExt = file.name.split('.').pop();
         const safeFileName = `${Date.now()}_${title.replace(/\s+/g, '_')}.${fileExt}`;
-        
-        const { data: uploadData, error: uploadError } = await supabaseClient.storage
-          .from('notes')
-          .upload(safeFileName, file);
-
+        const { error: uploadError } = await supabaseClient.storage.from('notes').upload(safeFileName, file);
         if (uploadError) throw uploadError;
 
-        const { data: urlData } = supabaseClient.storage
-          .from('notes')
-          .getPublicUrl(safeFileName);
-
-        const { error: dbError } = await supabaseClient
-          .from('notes_metadata')
-          .insert([{
-            title: title,
-            subject: subject,
-            year: parseInt(year),
-            file_url: urlData.publicUrl,
-            file_type: fileExt.toUpperCase(),
-            uploader: 'Authenticated Student'
-          }]);
-
+        const { data: urlData } = supabaseClient.storage.from('notes').getPublicUrl(safeFileName);
+        const { error: dbError } = await supabaseClient.from('notes_metadata').insert([{ title: title, subject: subject, year: parseInt(year), file_url: urlData.publicUrl, file_type: fileExt.toUpperCase(), uploader: 'Authenticated Student' }]);
         if (dbError) throw dbError;
 
         alert(`✅ Note "${title}" uploaded successfully!`);
         uploadForm.reset();
         dropZone.querySelector('p').innerHTML = `Drag & drop your file here, or <span>browse</span>`;
+        updateSubjectDropdowns('uploadYear', 'uploadSubject');
         fetchNotes(); 
-
       } catch (error) {
-        console.error(error);
         alert('❌ Upload failed: ' + error.message);
       } finally {
         uploadBtn.innerHTML = originalBtnText;
@@ -604,7 +517,6 @@
       }
     });
 
-    // ---------- Auth Modal Logic & Security ----------
     const loginBtn = document.getElementById('loginBtn');
     const authModal = document.getElementById('authModal');
     const closeAuth = document.getElementById('closeAuth');
@@ -617,14 +529,12 @@
     
     let isLoginMode = true;
 
-    // Toggle Modal Visibility
     function openModal(e) { e.preventDefault(); authModal.classList.add('active'); }
     function closeModal() { authModal.classList.remove('active'); }
     
     closeAuth.addEventListener('click', closeModal);
     authModal.addEventListener('click', (e) => { if(e.target === authModal) closeModal(); });
 
-    // Switch between Login & Sign Up
     authToggleBtn.addEventListener('click', (e) => {
       e.preventDefault();
       isLoginMode = !isLoginMode;
@@ -634,28 +544,26 @@
       authToggleBtn.innerText = isLoginMode ? 'Sign Up' : 'Login';
     });
 
-    // Handle Auth Submit via Supabase
     authForm.addEventListener('submit', async (e) => {
        e.preventDefault();
        const email = document.getElementById('authEmail').value;
        const password = document.getElementById('authPassword').value;
-       
        const btnText = authSubmitBtn.innerText;
        authSubmitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing...';
        
        try {
          if (isLoginMode) {
-           const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+           const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
            if (error) throw error;
            alert(`✅ Successfully logged in as ${email}`);
          } else {
-           const { data, error } = await supabaseClient.auth.signUp({ email, password });
+           const { error } = await supabaseClient.auth.signUp({ email, password });
            if (error) throw error;
            alert(`✅ Account created! You can now log in.`);
          }
          closeModal();
          authForm.reset();
-         checkUserStatus(); // Update UI
+         checkUserStatus(); 
        } catch (error) {
          alert('❌ Error: ' + error.message);
        } finally {
@@ -663,12 +571,9 @@
        }
     });
 
-    // Enforce Upload Restrictions & Update UI
     async function checkUserStatus() {
       const { data: { session } } = await supabaseClient.auth.getSession();
-      
       if (session) {
-        // User is logged in: Show upload section, change Login to Logout
         uploadSection.style.display = 'block';
         loginBtn.innerHTML = '<i class="fa-solid fa-right-from-bracket"></i> Logout';
         loginBtn.removeEventListener('click', openModal);
@@ -679,7 +584,6 @@
           checkUserStatus();
         };
       } else {
-        // User is guest: Hide upload section, show Login button
         uploadSection.style.display = 'none';
         loginBtn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Login';
         loginBtn.onclick = null; 
@@ -687,10 +591,8 @@
       }
     }
 
-    // Run on page load
     checkUserStatus();
 
-    // ---------- Mobile Menu ----------
     const hamburger = document.getElementById('hamburger');
     const navLinks = document.querySelector('.nav-links');
     hamburger.addEventListener('click', () => {
