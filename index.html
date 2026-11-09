@@ -176,7 +176,7 @@
         <div class="hero-card">
           <div class="hero-card-header"><i class="fa-solid fa-graduation-cap"></i><h3>Dashboard Preview</h3></div>
           <div class="hero-card-item"><span><i class="fa-solid fa-calendar"></i> Year</span><span>2nd Year</span></div>
-          <div class="hero-card-item"><span><i class="fa-solid fa-book"></i> Subject</span><span>Cloud Computing</span></div>
+          <div class="hero-card-item"><span><i class="fa-solid fa-book"></i> Subject</span><span>Operating System</span></div>
           <div class="hero-card-item"><span><i class="fa-solid fa-file-pdf"></i> Notes</span><span class="badge">12 Files</span></div>
           <div class="hero-card-item"><span><i class="fa-solid fa-download"></i> Downloads</span><span>1,248</span></div>
         </div>
@@ -357,11 +357,27 @@
     const supabaseKey = 'sb_publishable_PBVF_pPsGmnjaBEo2kMVKg_BztKnpF2';
     const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 
+    // Final Updated Syllabus from user images
     const aktuSubjects = {
-      "1": ["Electrical", "Maths 1", "Maths 2", "Programming Language", "Electronics", "Environment and Sustainability"],
-      "2": ["Data Structures", "Discrete Structures", "Computer Organization", "Operating Systems"],
-      "3": ["Database Management Systems", "Compiler Design", "Web Technology", "Software Engineering"],
-      "4": ["Cloud Computing", "Artificial Intelligence", "Cryptography", "Distributed Systems"]
+      "1": [
+        "Electrical", "Maths 1", "Maths 2", "Programming Language", 
+        "Electronics", "Environment and Sustainability"
+      ],
+      "2": [
+        "COA", "DS", "DSTL", "MATH-4", "OOP", "Python", 
+        "Cyber Security", "TC", "Operating System", "UHV", "TAFL", "OE"
+      ],
+      "3": [
+        "Data Warehousing & Data Mining", "Constitution Of India", "Essence of Indian Traditional Knowledge", 
+        "Database Management System", "Web Technology", "Design and Analysis of Algorithm", 
+        "Statistical Computing", "Data Analytics", "Computer Graphics", 
+        "Object-Oriented System Design with C++", "Machine Learning Techniques", 
+        "Application of Soft Computing", "Image Processing"
+      ],
+      "4": [
+        "Artificial Intelligence", "Internet of Things", "Cloud Computing", 
+        "Cryptography and Network Security", "Design & Development of Applications"
+      ]
     };
 
     function updateSubjectDropdowns(yearElementId, subjectElementId) {
