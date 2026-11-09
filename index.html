@@ -58,6 +58,10 @@
     .hero::after { content: ''; position: absolute; bottom: -30%; left: -10%; width: 600px; height: 600px; background: radial-gradient(circle, rgba(236, 72, 153, 0.1) 0%, transparent 70%); border-radius: 50%; animation: float 10s ease-in-out infinite reverse; }
     @keyframes float { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(30px, -30px) scale(1.05); } }
     .hero .container { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; position: relative; z-index: 1; }
+    
+    /* New Banner Style */
+    .hero-banner { display: inline-block; background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(139, 92, 246, 0.15)); color: var(--primary); padding: 0.5rem 1.2rem; border-radius: 999px; font-size: 0.85rem; font-weight: 700; margin-bottom: 1.5rem; border: 1px solid rgba(99,102,241,0.2); backdrop-filter: blur(10px); }
+    
     .hero-content h1 { font-size: clamp(2.5rem, 5vw, 3.5rem); font-weight: 800; line-height: 1.1; margin-bottom: 1.5rem; }
     .hero-content h1 span { background: linear-gradient(135deg, var(--primary), var(--accent), var(--accent-2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
     .hero-content p { font-size: 1.15rem; color: var(--text-muted); margin-bottom: 2rem; max-width: 500px; }
@@ -161,6 +165,11 @@
   <header class="hero" id="home">
     <div class="container">
       <div class="hero-content">
+        <!-- New Coming Soon Banner -->
+        <div class="hero-banner">
+          <i class="fa-solid fa-rocket"></i> More PDFs and subjects coming soon
+        </div>
+        
         <h1>Share Notes, <span>Grow Together</span></h1>
         <p>A cloud-based note-sharing platform for B.Tech students (1st–4th year). Browse year-wise, subject-wise notes, upload your own, and download resources instantly. Powered by Supabase.</p>
         <div class="hero-buttons">
@@ -353,19 +362,16 @@
     const supabaseKey = 'sb_publishable_PBVF_pPsGmnjaBEo2kMVKg_BztKnpF2';
     const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 
+    // Updated Year 1 Subjects based on provided screenshot
     const aktuSubjects = {
-      "1": ["Engineering Physics", "Engineering Mathematics", "Programming for Problem Solving", "Basic Electrical Engineering"],
+      "1": ["Electrical", "Maths 1", "Maths 2", "Programming Language", "Electronics", "Environment and Sustainability"],
       "2": ["Data Structures", "Discrete Structures", "Computer Organization", "Operating Systems"],
       "3": ["Database Management Systems", "Compiler Design", "Web Technology", "Software Engineering"],
       "4": ["Cloud Computing", "Artificial Intelligence", "Cryptography", "Distributed Systems"]
     };
 
+    // Removed the fake sample notes array to only show real uploads
     const sampleNotes = [];
-    for (const [yr, subjects] of Object.entries(aktuSubjects)) {
-      subjects.forEach(sub => {
-        sampleNotes.push({ title: `${sub} - Full Notes`, subject: sub, year: parseInt(yr), file_type: 'PDF', uploader: 'System Admin', file_url: '#' });
-      });
-    }
 
     function updateSubjectDropdowns(yearElementId, subjectElementId) {
       const year = document.getElementById(yearElementId).value;
