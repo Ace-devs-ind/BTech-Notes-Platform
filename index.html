@@ -240,7 +240,6 @@
         <select class="filter-select" id="subjectFilter">
           <option value="">All Subjects</option>
         </select>
-        <!-- New Download ZIP Button -->
         <button id="downloadSubjectBtn" class="btn btn-outline" style="display: none; padding: 0.6rem 1.2rem; font-size: 0.9rem; border-color: var(--primary); color: var(--primary);">
           <i class="fa-solid fa-file-zipper"></i> Download Full Subject (ZIP)
         </button>
@@ -257,7 +256,6 @@
         <div class="drop-zone" id="dropZone">
           <i class="fa-solid fa-copy"></i>
           <p>Drag & drop multiple files here, or <span>browse</span></p>
-          <!-- Added multiple attribute for bulk selection -->
           <input type="file" id="fileInput" multiple hidden />
         </div>
         <form class="upload-form" id="uploadForm">
@@ -306,17 +304,17 @@
         <div class="footer-col">
           <h4>Resources</h4>
           <ul>
-            <li><a href="#">Documentation</a></li>
-            <li><a href="#">Supabase Services</a></li>
-            <li><a href="#">Support</a></li>
+            <li><a href="https://github.com/Ace-devs-ind/BTech-Notes-Platform#readme" target="_blank" rel="noopener">Documentation</a></li>
+            <li><a href="https://supabase.com" target="_blank" rel="noopener">Supabase Services</a></li>
+            <li><a href="mailto:nimishakuamri77@gmail.com">Support</a></li>
           </ul>
         </div>
         <div class="footer-col">
           <h4>Connect</h4>
           <ul>
-            <li><a href="#"><i class="fa-brands fa-github"></i> GitHub</a></li>
-            <li><a href="#"><i class="fa-brands fa-linkedin"></i> LinkedIn</a></li>
-            <li><a href="#"><i class="fa-solid fa-envelope"></i> Email</a></li>
+            <li><a href="https://github.com/Ace-devs-ind/BTech-Notes-Platform" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> GitHub</a></li>
+            <li><a href="https://www.linkedin.com/in/nimisha-kumari-283a94378/" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin"></i> LinkedIn</a></li>
+            <li><a href="mailto:nimishakuamri77@gmail.com"><i class="fa-solid fa-envelope"></i> Email</a></li>
           </ul>
         </div>
       </div>
@@ -352,7 +350,6 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <!-- JSZip Library for Zipping Files -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
   <script>
@@ -444,7 +441,6 @@
         return matchesSearch && matchesYear && matchesSubject;
       });
 
-      // Show "Download ZIP" button only if a specific subject is selected and notes exist
       if (subject !== '' && currentFilteredNotes.length > 0) {
         downloadSubjectBtn.style.display = 'inline-flex';
       } else {
@@ -470,7 +466,6 @@
       `).join('');
     }
 
-    // JSZip Download Logic
     downloadSubjectBtn.addEventListener('click', async () => {
       if (currentFilteredNotes.length === 0) return;
       
@@ -536,7 +531,6 @@
       dropZone.querySelector('p').innerHTML = `<span style="font-size: 1.2rem;">${count} file(s) ready to upload</span>`; 
     }
 
-    // Bulk Upload Logic
     uploadForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       const year = document.getElementById('uploadYear').value;
@@ -557,7 +551,6 @@
           uploadBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Uploading ${i + 1} of ${files.length}...`;
           
           const fileExt = file.name.split('.').pop();
-          // Remove extension to use as clean title
           const rawName = file.name.replace(/\.[^/.]+$/, ""); 
           const safeFileName = `${Date.now()}_${i}_${file.name.replace(/\s+/g, '_')}`;
           
